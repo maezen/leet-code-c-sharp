@@ -16,15 +16,15 @@ namespace LeetCodeCSharp.Test
             var testArray = new[] {2, 7, 11, 15};
             
             var result1 = TwoSumSolution.TwoSum(testArray, 9);
-            Assert.Equal(result1[0], 0);
-            Assert.Equal(result1[1], 1);
+            Assert.Equal(0, result1[0]);
+            Assert.Equal(1, result1[1]);
             
             var result2 = TwoSumSolution.TwoSum(testArray, 22);
-            Assert.Equal(result2[0], 1);
-            Assert.Equal(result2[1], 3);
+            Assert.Equal(1, result2[0]);
+            Assert.Equal(3, result2[1]);
             
             var result3 = TwoSumSolution.TwoSum(testArray, 14);
-            Assert.Equal(result3.Length, 0);
+            Assert.Empty(result3);
         }
     }
 }
