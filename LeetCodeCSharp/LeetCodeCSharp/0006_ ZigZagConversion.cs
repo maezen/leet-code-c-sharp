@@ -4,8 +4,7 @@
 // </cleanup>
 // -----------------------------------------------------------------------
 
-using System.Collections.Generic;
-using System.Diagnostics;
+using System;
 
 namespace LeetCodeCSharp
 {
@@ -13,79 +12,62 @@ namespace LeetCodeCSharp
     {
         public static string Convert(string s, int numRows)
         {
-
-            var dict = new Dictionary<int, int>();
-
-            var numRowsCopy = numRows - 1;
-            var diff = 1;
+            if (numRows == 0) return string.Empty;
+            if (numRows == 1) return s;
             
-            while (numRowsCopy > 0)
+            var width = 1000;
+            var charArray = s.ToCharArray();
+            var charArrayCounter = 0;
+            var array = new string[numRows, width];
+
+            for (var i = 0; i < array.GetLength(1); i++)
             {
-                dict.Add(numRowsCopy, diff);
-                diff = diff + 2;
-                numRowsCopy--;
-            }
-
-            dict.TryGetValue(1, out var valueFirstRow);
-            dict.Add(numRows, valueFirstRow);
-
-            var sArray = s.ToCharArray();
-            var resultString = string.Empty;
-            
-            
-            // iterate over rows
-            for (var i = 1; i <= numRows; i++)
-            {
-                dict.TryGetValue(i, out diff); // get difference value for row
-
-                var outOfRange = false;
-                var nexValueIndex = i - 1;
-                
-                
-                var round = 1;
-                while (!outOfRange)
+                var mod = i % (numRows - 1);
+                if (mod == 0)
                 {
-                    if (i == 1 || i == numRows)
-                    {if (nexValueIndex < sArray.Length)
-                        {
-                            resultString += sArray[nexValueIndex];
-                            nexValueIndex += diff + 1;
-                        }
-                        else { outOfRange = true; }
-                    }
-                    else
+                    for (var j = 0; j < array.GetLength(0); j++)
                     {
-                        if ( round == 1)
-                        {
-                            resultString += sArray[nexValueIndex];
-                             round++;
-                            continue;
-                        }
-                        
-                        if ( round % 2 != 0)
-                        {
-                            dict.TryGetValue(1, out var maxDiff);
-                            nexValueIndex =  round + ( round * maxssDiff) - 1;
-                        }
-                        else
-                        {
-                            nexValueIndex = nexValueIndex + diff + 1;
-                        }
-
-                        if (nexValueIndex < sArray.Length) { resultString += sArray[nexValueIndex]; }
-                        else { outOfRange = true; }
-                         round++;
-    
+                        array[j, i] = charArrayCounter < charArray.Length
+                            ? charArray[charArrayCounter].ToString()
+                            : null;
+                        charArrayCounter++;
                     }
-                    
-                    
-
                 }
-
+                else
+                {
+                    array[numRows - 1 - mod, i] = charArrayCounter < charArray.Length
+                        ? charArray[charArrayCounter].ToString()
+                        : null;
+                    charArrayCounter++;
+                }
             }
 
-            return resultString;
+            var returnString = string.Empty;
+            foreach (var s1 in array)
+                if (s1 != null)
+                    returnString += s1;
 
+            return returnString;
+        }
+
+
+        private static string GetCharacterAsStringOfCharArray(char[] charArray, int index)
+        {
+            return index < charArray.Length ? charArray[index].ToString() : null;
+        }
+
+        private static void PrintArrayAsTable(string[,] array)
+        {
+            var line = string.Empty;
+            for (var i = 0; i < array.GetLength(0); i++)
+            for (var j = 0; j < array.GetLength(1); j++)
+            {
+                var value = array[i, j] ?? "0";
+                line += value;
+                if (j != array.GetLength(1) - 1) continue;
+                Console.WriteLine(line);
+                line = string.Empty;
+            }
         }
     }
 }

@@ -16,10 +16,11 @@ namespace LeetCodeCSharp.Test
         public void TestConvert()
         {
             // var result1 = ZigZagConversionSolution.Convert("PAYPALISHIRING", 3);
-            var result2 = ZigZagConversionSolution.Convert("PAYPALISHIRING", 4);
+            // var result2 = ZigZagConversionSolution.Convert("PAYPALISHIRING", 4);
+            var result3 = ZigZagConversionSolution.Convert("", 1);
             
             // Assert.Equal("PAHNAPLSIIGYIR", result1);
-            Assert.Equal("PINALSIGYAHRPI", result2);
+            Assert.Equal("PINALSIGYAHRPI", result3);
         }
 
         #endregion
